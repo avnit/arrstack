@@ -402,6 +402,45 @@ services:
 #      - TZ=Etc/UTC
 #    volume:
 #      - ${ARRPATH}caddy/config:/config
+#######################################
+# Treafik
+#######################################
+  traefik:
+    image: traefik:latest
+    container_name: traefik
+    restart: unless-stopped
+    networks:
+      - arrstack                                            # Proxy Network
+    ports:
+      - 9080:80
+      - 9443:443
+    environment:
+      #- CF_DNS_API_TOKEN=      # CHange API_TOKEN
+      # If you choose to use an API Key instead of a Token, specify your email as well
+      - CF_API_EMAIL=${CF_API_EMAIL}
+      - CF_API_KEY=${CF_API_KEY}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - {$ARRPATH}traefik/data/traefik.yml:/traefik.yml:ro               # Change File Locations if needed
+      - {$ARRPATH}traefik/data/acme.json:/acme.json                      # Change File Locations if needed, also "chmod 600 acme.json"
+      - {$ARRPATH}treafik/data/config.yml:/config.yml:ro                 # Change File Locations if needed
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.entrypoints=http"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.asbblog.com`)"                      # Change DOMAIN_NAME to yours
+      - "traefik.http.middlewares.traefik-auth.basicauth.users=admin:sample123@"   # Change HASHED_PASSWORD, and username=admin
+      - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto=https"
+      - "traefik.http.routers.traefik.middlewares=https-redirect"
+      - "traefik.http.routers.traefik-secure.entrypoints=https"
+      - "traefik.http.routers.traefik-secure.rule=Host(`traefik.abambah.com`)"               # Change DOMAIN_NAME to yours
+      - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
+      - "traefik.http.routers.traefik-secure.tls=true"
+      - "traefik.http.routers.traefik-secure.tls.certresolver=cloudflare"
+      - "traefik.http.routers.traefik-secure.tls.domains[0].main=asbblog.com"                # Change DOMAIN_NAME to yours
+      - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.asbblog.com"              # Change DOMAIN_NAME to yours
+      - "traefik.http.routers.traefik-secure.service=api@internal"
 networks:
   arrstack:
     external: true
