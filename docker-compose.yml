@@ -422,9 +422,9 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - {$ARRPATH}traefik/data/traefik.yml:/traefik.yml:ro               # Change File Locations if needed
-      - {$ARRPATH}traefik/data/acme.json:/acme.json                      # Change File Locations if needed, also "chmod 600 acme.json"
-      - {$ARRPATH}treafik/data/config.yml:/config.yml:ro                 # Change File Locations if needed
+      - /media/Arr/traefik/data/traefik.yml:/traefik.yml:ro               # Change File Locations if needed
+      - /media/Arr/traefik/data/acme.json:/acme.json                      # Change File Locations if needed, also "chmod 600 acme.json"
+      - /media/Arr/treafik/data/config.yml:/config.yml:ro                 # Change File Locations if needed
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.traefik.entrypoints=http"
