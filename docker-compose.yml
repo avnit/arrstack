@@ -26,6 +26,16 @@ services:
        - "homepage.description= Prowlarr on 110"
        - "homepage.widget.type=prowlarr"
        - "homepage.widget.url=http://192.168.68.110:9696"
+       - "traefik.enable=true"
+       - "traefik.http.routers.prowlarr.entrypoints=http"
+       - "traefik.http.routers.prowlarr.rule=Host(`prowlarr3.asbblog.com`)"
+       - "traefik.http.routers.prowlarr.middlewares=https-redirect"
+       - "traefik.http.routers.prowlarr-secure.entrypoints=https"
+       - "traefik.http.routers.prowlarr-secure.rule=Host(`prowlarr3.asbblog.com`)"
+       - "traefik.http.routers.prowlarr-secure.tls=true"
+       - "traefik.http.routers.prowlarr-secure.service=prowlarr"
+       - "traefik.http.services.prowlarr.loadbalancer.server.port=9696"
+       - "traefik.docker.network=arrstack"
     env_file:
       - '.env'
       
@@ -49,10 +59,10 @@ services:
       - 8989:8989
     restart: unless-stopped
     labels:
-          - homepage.group=Media
-          - homepage.name=sonarr3
-          - homepage.icon=sonarr.png
-          - homepage.href=http://192.168.68.110:8989
+      - "homepage.group=Media"
+      - "homepage.name=sonarr3"
+      - "homepage.icon=sonarr.png"
+      - "homepage.href=http://192.168.68.110:8989"
     env_file:
       - '.env'
       
