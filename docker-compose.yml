@@ -1,12 +1,12 @@
-services:       
+services:
 
-# ██████╗ ██████╗  ██████╗ ██╗    ██╗██╗      █████╗ ██████╗ ██████╗ 
+# ██████╗ ██████╗  ██████╗ ██╗    ██╗██╗      █████╗ ██████╗ ██████╗
 # ██╔══██╗██╔══██╗██╔═══██╗██║    ██║██║     ██╔══██╗██╔══██╗██╔══██╗
 # ██████╔╝██████╔╝██║   ██║██║ █╗ ██║██║     ███████║██████╔╝██████╔╝
 # ██╔═══╝ ██╔══██╗██║   ██║██║███╗██║██║     ██╔══██║██╔══██╗██╔══██╗
 # ██║     ██║  ██║╚██████╔╝╚███╔███╔╝███████╗██║  ██║██║  ██║██║  ██║
 # ╚═╝     ╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═
-                              
+
   prowlarr:
     image: linuxserver/prowlarr:latest
     container_name: prowlarr
@@ -40,14 +40,14 @@ services:
        - "traefik.docker.network=arrstack"
     env_file:
       - '.env'
-      
-# ███████╗ ██████╗ ███╗   ██╗ █████╗ ██████╗ ██████╗ 
+
+# ███████╗ ██████╗ ███╗   ██╗ █████╗ ██████╗ ██████╗
 # ██╔════╝██╔═══██╗████╗  ██║██╔══██╗██╔══██╗██╔══██╗
 # ███████╗██║   ██║██╔██╗ ██║███████║██████╔╝██████╔╝
 # ╚════██║██║   ██║██║╚██╗██║██╔══██║██╔══██╗██╔══██╗
 # ███████║╚██████╔╝██║ ╚████║██║  ██║██║  ██║██║  ██║
-# ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝                                                 
-      
+# ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
+
   sonarr:
     image: linuxserver/sonarr:latest
     container_name: sonarr
@@ -69,24 +69,24 @@ services:
       - "homepage.href=http://192.168.68.110:8989"
       - "traefik.enable=true"
       - "traefik.http.routers.sonarr.entrypoints=http"
-      - "traefik.http.routers.sonarr.rule=Host(`sonarr3.asbblog.com`)"                              
+      - "traefik.http.routers.sonarr.rule=Host(`sonarr3.asbblog.com`)"
       - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.sonarr.middlewares=https-redirect"
       - "traefik.http.routers.sonarr-secure.entrypoints=https"
-      - "traefik.http.routers.sonarr-secure.rule=Host(`sonarr3.asbblog.com`)"                       
+      - "traefik.http.routers.sonarr-secure.rule=Host(`sonarr3.asbblog.com`)"
       - "traefik.http.routers.sonarr-secure.tls=true"
       - "traefik.http.routers.sonarr-secure.service=sonarr"
       - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
       - "traefik.docker.network=arrstack"
     env_file:
       - '.env'
-      
-# ██████╗  █████╗ ██████╗  █████╗ ██████╗ ██████╗ 
+
+# ██████╗  █████╗ ██████╗  █████╗ ██████╗ ██████╗
 # ██╔══██╗██╔══██╗██╔══██╗██╔══██╗██╔══██╗██╔══██╗
 # ██████╔╝███████║██║  ██║███████║██████╔╝██████╔╝
 # ██╔══██╗██╔══██║██║  ██║██╔══██║██╔══██╗██╔══██╗
 # ██║  ██║██║  ██║██████╔╝██║  ██║██║  ██║██║  ██║
-# ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝                                              
+# ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
 
   radarr:
     image: linuxserver/radarr:latest
@@ -109,25 +109,25 @@ services:
           - "homepage.href=http://192.168.68.110:7878"
           - "traefik.enable=true"
           - "traefik.http.routers.radaar.entrypoints=http"
-          - "traefik.http.routers.radaar.rule=Host(`radaar3.asbblog.com`)"                             
+          - "traefik.http.routers.radaar.rule=Host(`radaar3.asbblog.com`)"
           - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
           - "traefik.http.routers.radaar.middlewares=https-redirect"
           - "traefik.http.routers.radaar-secure.entrypoints=https"
-          - "traefik.http.routers.radaar-secure.rule=Host(`radaar3.asbblog.com`)"                       
+          - "traefik.http.routers.radaar-secure.rule=Host(`radaar3.asbblog.com`)"
           - "traefik.http.routers.radaar-secure.tls=true"
           - "traefik.http.routers.radaar-secure.service=radaar"
           - "traefik.http.services.radaar.loadbalancer.server.port=7878"
           - "traefik.docker.network=arrstack"
     env_file:
       - '.env'
-      
-# ██╗     ██╗██████╗  █████╗ ██████╗ ██████╗ 
+
+# ██╗     ██╗██████╗  █████╗ ██████╗ ██████╗
 # ██║     ██║██╔══██╗██╔══██╗██╔══██╗██╔══██╗
 # ██║     ██║██║  ██║███████║██████╔╝██████╔╝
 # ██║     ██║██║  ██║██╔══██║██╔══██╗██╔══██╗
 # ███████╗██║██████╔╝██║  ██║██║  ██║██║  ██║
 # ╚══════╝╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
-                                             
+
   lidarr:
     image: linuxserver/lidarr:latest
     container_name: lidarr
@@ -147,11 +147,11 @@ services:
       - "homepage.href=http://192.168.68.110:8686"
       - "traefik.enable=true"
       - "traefik.http.routers.lidarr.entrypoints=http"
-      - "traefik.http.routers.lidarr.rule=Host(`lidarr3.asbblog.com`)"                             
+      - "traefik.http.routers.lidarr.rule=Host(`lidarr3.asbblog.com`)"
       - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.lidarr.middlewares=https-redirect"
       - "traefik.http.routers.lidarr-secure.entrypoints=https"
-      - "traefik.http.routers.lidarr-secure.rule=Host(`lidarr3.asbblog.com`)"                       
+      - "traefik.http.routers.lidarr-secure.rule=Host(`lidarr3.asbblog.com`)"
       - "traefik.http.routers.lidarr-secure.tls=true"
       - "traefik.http.routers.lidarr-secure.service=lidarr"
       - "traefik.http.services.lidarr.loadbalancer.server.port=8686"
@@ -159,14 +159,14 @@ services:
     restart: unless-stopped
     env_file:
       - '.env'
-      
-# ██████╗ ███████╗ █████╗ ██████╗  █████╗ ██████╗ ██████╗ 
+
+# ██████╗ ███████╗ █████╗ ██████╗  █████╗ ██████╗ ██████╗
 # ██╔══██╗██╔════╝██╔══██╗██╔══██╗██╔══██╗██╔══██╗██╔══██╗
 # ██████╔╝█████╗  ███████║██║  ██║███████║██████╔╝██████╔╝
 # ██╔══██╗██╔══╝  ██╔══██║██║  ██║██╔══██║██╔══██╗██╔══██╗
 # ██║  ██║███████╗██║  ██║██████╔╝██║  ██║██║  ██║██║  ██║
 # ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
-                                                                                                                   
+
   readarr:
     image: linuxserver/readarr:develop
     container_name: readarr
@@ -184,11 +184,11 @@ services:
       - "homepage.href=http://192.168.68.110:8787"
       - "traefik.enable=true"
       - "traefik.http.routers.readarr.entrypoints=http"
-      - "traefik.http.routers.readarr.rule=Host(`readarr3.asbblog.com`)"                             
+      - "traefik.http.routers.readarr.rule=Host(`readarr3.asbblog.com`)"
       - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.readarr.middlewares=https-redirect"
       - "traefik.http.routers.readarr-secure.entrypoints=https"
-      - "traefik.http.routers.readarr-secure.rule=Host(`readarr3.asbblog.com`)"                       
+      - "traefik.http.routers.readarr-secure.rule=Host(`readarr3.asbblog.com`)"
       - "traefik.http.routers.readarr-secure.tls=true"
       - "traefik.http.routers.readarr-secure.service=readarr"
       - "traefik.http.services.readarr.loadbalancer.server.port=8787"
@@ -199,13 +199,13 @@ services:
     env_file:
       - '.env'
 
-# ██╗  ██╗ ██████╗ ███╗   ███╗ █████╗ ██████╗ ██████╗ 
+# ██╗  ██╗ ██████╗ ███╗   ███╗ █████╗ ██████╗ ██████╗
 # ██║  ██║██╔═══██╗████╗ ████║██╔══██╗██╔══██╗██╔══██╗
 # ███████║██║   ██║██╔████╔██║███████║██████╔╝██████╔╝
 # ██╔══██║██║   ██║██║╚██╔╝██║██╔══██║██╔══██╗██╔══██╗
 # ██║  ██║╚██████╔╝██║ ╚═╝ ██║██║  ██║██║  ██║██║  ██║
 # ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
-        
+
   homarr:
     container_name: homarr
     image: ghcr.io/ajnart/homarr:latest
@@ -225,11 +225,11 @@ services:
       - "homepage.href=http://192.168.68.110:7575"
       - "traefik.enable=true"
       - "traefik.http.routers.homarr.entrypoints=http"
-      - "traefik.http.routers.homarr.rule=Host(`homarr3.asbblog.com`)"                             
+      - "traefik.http.routers.homarr.rule=Host(`homarr3.asbblog.com`)"
       - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.homarr.middlewares=https-redirect"
       - "traefik.http.routers.homarr-secure.entrypoints=https"
-      - "traefik.http.routers.homarr-secure.rule=Host(`homarr3.asbblog.com`)"                       
+      - "traefik.http.routers.homarr-secure.rule=Host(`homarr3.asbblog.com`)"
       - "traefik.http.routers.homarr-secure.tls=true"
       - "traefik.http.routers.homarr-secure.service=homarr"
       - "traefik.http.services.homarr.loadbalancer.server.port=7575"
@@ -243,7 +243,7 @@ services:
 # ██   ██║██╔══╝  ██║     ██║    ╚██╔╝  ██╔══╝  ██║██║╚██╗██║
 # ╚█████╔╝███████╗███████╗███████╗██║   ██║     ██║██║ ╚████║
 #  ╚════╝ ╚══════╝╚══════╝╚══════╝╚═╝   ╚═╝     ╚═╝╚═╝  ╚═══╝
-     
+
   jellyfin:
     image: linuxserver/jellyfin
     container_name: jellyfin
@@ -275,14 +275,14 @@ services:
     env_file:
       - '.env'
     restart: unless-stopped
-          
+
 #  ██████╗ ██████╗ ██╗████████╗████████╗ ██████╗ ██████╗ ██████╗ ███████╗███╗   ██╗████████╗
 # ██╔═══██╗██╔══██╗██║╚══██╔══╝╚══██╔══╝██╔═══██╗██╔══██╗██╔══██╗██╔════╝████╗  ██║╚══██╔══╝
-# ██║   ██║██████╔╝██║   ██║      ██║   ██║   ██║██████╔╝██████╔╝█████╗  ██╔██╗ ██║   ██║   
-# ██║▄▄ ██║██╔══██╗██║   ██║      ██║   ██║   ██║██╔══██╗██╔══██╗██╔══╝  ██║╚██╗██║   ██║   
-# ╚██████╔╝██████╔╝██║   ██║      ██║   ╚██████╔╝██║  ██║██║  ██║███████╗██║ ╚████║   ██║   
-#  ╚══▀▀═╝ ╚═════╝ ╚═╝   ╚═╝      ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝                                                                                          
-                                                                                             
+# ██║   ██║██████╔╝██║   ██║      ██║   ██║   ██║██████╔╝██████╔╝█████╗  ██╔██╗ ██║   ██║
+# ██║▄▄ ██║██╔══██╗██║   ██║      ██║   ██║   ██║██╔══██╗██╔══██╗██╔══╝  ██║╚██╗██║   ██║
+# ╚██████╔╝██████╔╝██║   ██║      ██║   ╚██████╔╝██║  ██║██║  ██║███████╗██║ ╚████║   ██║
+#  ╚══▀▀═╝ ╚═════╝ ╚═╝   ╚═╝      ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝
+
   qbittorrent:
     image: linuxserver/qbittorrent:latest
     container_name: qbittorrent
@@ -315,7 +315,7 @@ services:
       - "autoheal=true"
     env_file:
       - '.env'
-  
+
 # volumes:
 #  nfs_volume:
 #    driver: local
@@ -336,7 +336,7 @@ services:
        - 5055:5055
      volumes:
        - ${ARRPATH}jellyseerr/config:/app/config
-     restart: unless-stopped 
+     restart: unless-stopped
      networks:
        - arrstack
      labels:
@@ -373,7 +373,7 @@ services:
     networks:
       - arrstack
 ########################
-# Autoheal 
+# Autoheal
 ########################
   autoheal:
     image: linuxserver/autoheal
@@ -396,7 +396,7 @@ services:
 #  caddy:
 #    container_name: caddy
 #    image: ghcr.io/hotio/caddy
-#    ports: 
+#    ports:
 #      - 8081:8081
 #      - 8443:8443
 #    enviornment:
