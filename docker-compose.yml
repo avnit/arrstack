@@ -376,20 +376,15 @@ services:
 # Autoheal
 ########################
   autoheal:
-    image: linuxserver/autoheal
-    container_name: autoheal
+    environment:
+      AUTOHEAL_CONTAINER_LABEL: autoheal
+      AUTOHEAL_INTERVAL: 7
+    image: willfarrell/autoheal:latest
+    network_mode: none
     restart: always
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
       - /etc/localtime:/etc/localtime:ro
-    environment:
-      - AUTOHEAL_CONTAINER_LABEL=all
-      - AUTOHEAL_START_PERIOD=300
-    labels:
-      - "com.centurylinklabs.watchtower.enable=false"
-      - "autoheal=true"
-    networks:
-      - arrstack
+      - /var/run/docker.sock:/var/run/docker.sock 
 ########################
 # Caddy
 ########################
