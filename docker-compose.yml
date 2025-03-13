@@ -109,11 +109,11 @@ services:
           - "homepage.href=http://192.168.68.110:7878"
           - "traefik.enable=true"
           - "traefik.http.routers.radaar.entrypoints=http"
-          - "traefik.http.routers.radaar.rule=Host(`radaar3.asbblog.com`)"
+          - "traefik.http.routers.radaar.rule=Host(`radarr3.asbblog.com`)"
           - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
           - "traefik.http.routers.radaar.middlewares=https-redirect"
           - "traefik.http.routers.radaar-secure.entrypoints=https"
-          - "traefik.http.routers.radaar-secure.rule=Host(`radaar3.asbblog.com`)"
+          - "traefik.http.routers.radaar-secure.rule=Host(`radarr3.asbblog.com`)"
           - "traefik.http.routers.radaar-secure.tls=true"
           - "traefik.http.routers.radaar-secure.service=radaar"
           - "traefik.http.services.radaar.loadbalancer.server.port=7878"
@@ -422,7 +422,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /media/Arr/traefik/data/traefik.yml:/traefik.yml:ro               # Change File Locations if needed
+      - /media/Arr/traefik/data/acme.json:/traefik.yml:ro               # Change File Locations if needed
       - /media/Arr/traefik/data/acme.json:/acme.json                      # Change File Locations if needed, also "chmod 600 acme.json"
       - /media/Arr/treafik/data/config.yml:/config.yml:ro                 # Change File Locations if needed
     labels:
