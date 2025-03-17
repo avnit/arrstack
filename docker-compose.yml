@@ -384,7 +384,7 @@ services:
     restart: always
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /var/run/docker.sock:/var/run/docker.sock 
+      - /var/run/docker.sock:/var/run/docker.sock
 ########################
 # Caddy
 ########################
@@ -422,7 +422,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ${ARRPATH}traefik/data/acme.json:/traefik.yml:ro               # Change File Locations if needed
+      - ${ARRPATH}traefik/data/traefik.yml:/traefik.yml:ro               # Change File Locations if needed
       - ${ARRPATH}traefik/data/acme.json:/acme.json                      # Change File Locations if needed, also "chmod 600 acme.json"
       - ${ARRPATH}treafik/data/config.yml:/config.yml:ro                 # Change File Locations if needed
     labels:
