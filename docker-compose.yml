@@ -21,7 +21,7 @@ services:
       - arrstack
     restart: unless-stopped
     labels:
-       - "homepage.group=Media"
+       - "homepage.group=Media2"
        - "homepage.name=prowlarr3"
        - "homepage.icon=prowlarr.png"
        - "homepage.href=http://192.168.68.110:9696"
@@ -63,7 +63,7 @@ services:
       - 8989:8989
     restart: unless-stopped
     labels:
-      - "homepage.group=Media"
+      - "homepage.group=Media2"
       - "homepage.name=sonarr3"
       - "homepage.icon=sonarr.png"
       - "homepage.href=http://192.168.68.110:8989"
@@ -103,7 +103,7 @@ services:
     networks:
       - arrstack
     labels:
-          - "homepage.group=Media"
+          - "homepage.group=Media2"
           - "homepage.name=Radarr"
           - "homepage.icon=radarr.png"
           - "homepage.href=http://192.168.68.110:7878"
@@ -141,7 +141,7 @@ services:
     ports:
       - 8686:8686
     labels:
-      - "homepage.group=Media"
+      - "homepage.group=Media2"
       - "homepage.name=lidarr"
       - "homepage.icon=lidarr.png"
       - "homepage.href=http://192.168.68.110:8686"
@@ -179,7 +179,7 @@ services:
     networks:
       - arrstack
     labels:
-      - "homepage.group=Media"
+      - "homepage.group=Media2"
       - "homepage.name=readarr"
       - "homepage.icon=readarr.png"
       - "homepage.href=http://192.168.68.110:8787"
@@ -220,7 +220,7 @@ services:
     ports:
       - '7575:7575'
     labels:
-      - "homepage.group=Media"
+      - "homepage.group=Media2"
       - "homepage.name=homarr"
       - "homepage.icon=homarr.png"
       - "homepage.href=http://192.168.68.110:7575"
@@ -260,6 +260,7 @@ services:
       - ${ARRPATH}Sonarr/tvshows:/data/TVShows
       - ${ARRPATH}Lidarr/music:/data/Music
       - ${ARRPATH}Readarr/books:/data/Books
+      - ${ARRPATH}Downloads/tv-whisparr:/data/temp-movies
 #      - nfs_volume:/data/movies-unraid
     labels:
       - "traefik.enable=true"
