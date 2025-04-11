@@ -263,6 +263,10 @@ services:
       - ${ARRPATH}Downloads/tv-whisparr:/data/temp-movies
 #      - nfs_volume:/data/movies-unraid
     labels:
+      - "homepage.group=Media2"
+      - "homepage.name=jellyfin"
+      - "homepage.icon=jellyfin.png"
+      - "homepage.href=http://192.168.68.110:8096"
       - "traefik.enable=true"
       - "traefik.http.routers.jellyfin.entrypoints=http"
       - "traefik.http.routers.jellyfin.rule=Host(`jellyfin3.asbblog.com`)"                           # Replace $DOMAIN_NAME with yours
@@ -309,7 +313,7 @@ services:
       retries: 3
       start_period: 15s
     labels:
-      - "homepage.group=Media"
+      - "homepage.group=Media2"
       - "homepage.name=qbittorrent"
       - "homepage.icon=qbittorrent.png"
       - "homepage.href=http://qb3.asbblog.com"
@@ -342,7 +346,7 @@ services:
      networks:
        - arrstack
      labels:
-        - "homepage.group=Media"
+        - "homepage.group=Media2"
         - "homepage.name=jellyseerr"
         - "homepage.icon=jellyseerr.png"
         - "homepage.href=http://jellyseerr.asbblog.com"                                           # Replace $DOMAIN_NAME with yours
@@ -374,6 +378,22 @@ services:
     restart: unless-stopped # optional make sure this is set to no or removed. Default is no
     networks:
       - arrstack
+    labels:
+        - "homepage.group=Media2"
+        - "homepage.name=configarr"
+        - "homepage.icon=configarr.png"
+        - "homepage.href=http://jconfigarr.asbblog.com"                                           # Replace $DOMAIN_NAME with yours
+        - "traefik.enable=true"
+        - "traefik.http.routers.configarr.entrypoints=http"
+        - "traefik.http.routers.configarr.rule=Host(`configarr.asbblog.com`)"                      # Replace $DOMAIN_NAME with yours
+        - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
+        - "traefik.http.routers.configarr.middlewares=https-redirect"
+        - "traefik.http.routers.configarr-secure.entrypoints=https"
+        - "traefik.http.routers.configarr-secure.rule=Host(`configarr.asbblog.com`)"               # Replace $DOMAIN_NAME with yours
+        - "traefik.http.routers.configarr-secure.tls=true"
+        - "traefik.http.routers.configarr-secure.service=configarr"
+        - "traefik.http.services.configarr.loadbalancer.server.port=9090"
+        - "traefik.docker.network=arrstack"
 ########################
 # Autoheal
 ########################
