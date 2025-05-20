@@ -261,6 +261,7 @@ services:
       - ${ARRPATH}Lidarr/music:/data/Music
       - ${ARRPATH}Readarr/books:/data/Books
       - ${ARRPATH}Downloads/tv-whisparr:/data/temp-movies
+      - ${ARRPATH}whisparr/data/amovies:/data/temp-movies2
 #      - nfs_volume:/data/movies-unraid
     labels:
       - "homepage.group=Media2"
@@ -485,20 +486,29 @@ services:
       - ${ARRPATH}treafik/data/config.yml:/config.yml:ro                 # Change File Locations if needed
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.traefik.entrypoints=http"
-      - "traefik.http.routers.traefik.rule=Host(`*.traefik.asbblog.com`)"                      # Change DOMAIN_NAME to yours
-      - "traefik.http.middlewares.traefik-auth.basicauth.users=admin:sample123@"   # Change HASHED_PASSWORD, and username=admin
-      - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
-      - "traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto=https"
-      - "traefik.http.routers.traefik.middlewares=https-redirect"
-      - "traefik.http.routers.traefik-secure.entrypoints=https"
-      - "traefik.http.routers.traefik-secure.rule=Host(`*.traefik.asbblog.com`)"               # Change DOMAIN_NAME to yours
+
+      # HTTP Router for Traefik Dashboard (redirects to HTTPS)
+      - "traefik.http.routers.traefik-http.entrypoints=web" # Assuming 'web' is your HTTP entrypoint defined in traefik.yml on port 80
+      - "traefik.http.routers.traefik-http.rule=Host(`https://www.google.com/url?sa=E&source=gmail&q=traefik.asbblog.com`)" # Specific hostname is better for the dashboard
+      - "traefik.http.routers.traefik-http.middlewares=traefik-redirect-to-https"
+
+      # HTTPS Router for Traefik Dashboard
+      - "traefik.http.routers.traefik-secure.entrypoints=websecure" # Assuming 'websecure' is your HTTPS entrypoint defined in traefik.yml on port 443
+      - "traefik.http.routers.traefik-secure.rule=Host(`https://www.google.com/url?sa=E&source=gmail&q=traefik.asbblog.com`)" # Specific hostname
       - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
       - "traefik.http.routers.traefik-secure.tls=true"
-      - "traefik.http.routers.traefik-secure.tls.certresolver=cloudflare"
-      - "traefik.http.routers.traefik-secure.tls.domains[0].main=*.traefik.asbblog.com"                # Change DOMAIN_NAME to yours
-      - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.traefik.asbblog.com"              # Change DOMAIN_NAME to yours
-      - "traefik.http.routers.traefik-secure.service=api@internal"
+      - "traefik.http.routers.traefik-secure.tls.certresolver=cloudflare" # Ensure 'cloudflare' resolver is defined in traefik.yml
+      # Wildcard certificate for the domain - this will cover https://www.google.com/url?sa=E&source=gmail&q=traefik.asbblog.com and other *.https://www.google.com/url?sa=E&source=gmail&q=traefik.asbblog.com services
+      - "traefik.http.routers.traefik-secure.tls.domains[0].main=asbblog.com" # Your main domain
+      - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.asbblog.com" # SAN for wildcards
+      - "traefik.http.routers.traefik-secure.service=api@internal" # Exposes the Traefik API/Dashboard
+
+      # Middlewares
+      - "traefik.http.middlewares.traefik-redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.traefik-auth.basicauth.users=admin:golD123@" # Replace with htpasswd generated hash (e.g., admin:$$apr1$$...)
+      # The 'sslheader' middleware below is defined but not used by the dashboard itself.
+      # You might use it for other services if they need the X-Forwarded-Proto header.
+      # - "traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto=https"
 networks:
   arrstack:
     external: true

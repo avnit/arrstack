@@ -1,0 +1,54 @@
+# traefik.yml (Static Configuration)
+
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: false # Set to true if you want to send anonymous usage data
+
+# API and Dashboard (optional, as it's also enabled by api@internal service in Docker labels)
+api:
+  dashboard: true
+  insecure: false # Access dashboard via HTTPS
+
+entryPoints:
+  web: # This is the HTTP entrypoint
+    address: ":80"
+    http:
+      redirections: # Optional: Global HTTP to HTTPS redirection
+        entryPoint:
+          to: websecure
+          scheme: https
+          permanent: true
+
+  websecure: # This is the HTTPS entrypoint
+    address: ":443"
+    http:
+      tls:
+        certResolver: cloudflare # Default cert resolver for this entrypoint
+        # You can also define domains for the entrypoint if needed, but per-router is more flexible
+        domains:
+           - main: "asbblog.com"
+             sans:
+              - "*.asbblog.com"
+
+providers:
+  docker:
+    exposedByDefault: false # Recommended: explicitly enable services with 'traefik.enable=true'
+    network: arrstack       # Name of the Docker network Traefik should monitor
+
+certificatesResolvers:
+  cloudflare: # This MUST match the name used in your labels (tls.certresolver=cloudflare)
+    acme:
+      email: ${CF_API_EMAIL} # Your Cloudflare email - ensure this variable is accessible
+      storage: acme.json     # Path to the acme.json file inside the container
+      dnsChallenge:
+        provider: cloudflare
+        # delayBeforeCheck: 0 # Optional
+        resolvers: # Optional: custom DNS resolvers for ACME checks
+          - "1.1.1.1:53"
+          - "8.8.8.8:53"
+        # If using Cloudflare API Token (preferred over Global API Key for better security):
+        #dns_api_token: ${CF_DNS_API_TOKEN} # Ensure this environment variable is set in docker-compose
+
+# Log level (optional, default is ERROR)
+log:
+  level: INFO # Or DEBUG for more verbose logging during troubleshooting
