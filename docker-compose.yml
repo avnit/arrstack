@@ -407,23 +407,59 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock
+######################################
+# huntarr
+#####################################
+  huntarr:
+    image: ghcr.io/plexguide/huntarr:latest
+    container_name: huntarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    ports:
+      - 8181:8080
+    volumes:
+      - ${ARRPATH}huntarr/config:/config
+      - ${ARRPATH}huntarr/data:/data
+    restart: unless-stopped
+    networks:
+      - arrstack
+    labels:
+        - "homepage.group=Media2"
+        - "homepage.name=huntarr"
+        - "homepage.icon=huntarr.png"
+        - "homepage.href=http://192.168.68.110:8181"                       # Replace $DOMAIN_NAME with yours
+        - "traefik.enable=true"
+        - "traefik.http.routers.huntarr.entrypoints=http"
+        - "traefik.http.routers.huntarr.rule=Host(`huntarr.asbblog.com`)"                      # Replace $DOMAIN_NAME with yours
+        - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
+        - "traefik.http.routers.huntarr.middlewares=https-redirect"
+        - "traefik.http.routers.huntarr-secure.entrypoints=https"
+        - "traefik.http.routers.huntarr-secure.rule=Host(`huntarr.asbblog.com`)"               # Replace $DOMAIN_NAME with yours
+        - "traefik.http.routers.huntarr-secure.tls=true"
+        - "traefik.http.routers.huntarr-secure.service=configarr"
+        - "traefik.http.services.huntarr.loadbalancer.server.port=8181"
+        - "traefik.docker.network=arrstack"
 ########################
 # Caddy
 ########################
-#  caddy:
-#    container_name: caddy
-#    image: ghcr.io/hotio/caddy
-#    ports:
-#      - 8081:8081
-#      - 8443:8443
-#    enviornment:
-#      - PUID=1000
-#      - PGID=1000
-#      - UMASK=002
-#      - CUSTOM_BUILD
-#      - TZ=Etc/UTC
-#    volume:
-#      - ${ARRPATH}caddy/config:/config
+  caddy:
+    container_name: caddy
+    image: ghcr.io/hotio/caddy
+    ports:
+      - 8081:8081
+      - 8443:8443
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - CUSTOM_BUILD
+      - TZ=Etc/UTC
+    volumes:
+      - ${ARRPATH}caddy/config:/config
+    networks:
+      - arrstack
 #######################################
 # Treafik
 #######################################
