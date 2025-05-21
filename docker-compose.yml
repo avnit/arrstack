@@ -419,7 +419,7 @@ services:
       - PGID=1000
       - TZ=Etc/UTC
     ports:
-      - 8181:8080
+      - 8080:8181
     volumes:
       - ${ARRPATH}huntarr/config:/config
       - ${ARRPATH}huntarr/data:/data
