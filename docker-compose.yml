@@ -172,7 +172,7 @@ services:
 # ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
 
   readarr:
-    image: linuxserver/readarr:nightly
+    image: linuxserver/readarr:latest
     container_name: readarr
     hostname: readarr
     platform: linux/amd64
