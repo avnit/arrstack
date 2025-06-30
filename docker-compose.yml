@@ -422,7 +422,7 @@ services:
       - PGID=1000
       - TZ=Etc/UTC
     ports:
-      - 8080:8181
+      - 13080:8181
     volumes:
       - ${ARRPATH}huntarr/config:/config
       - ${ARRPATH}huntarr/data:/data
@@ -453,8 +453,8 @@ services:
     image: ghcr.io/hotio/caddy:latest
     platform: linux/amd64
     ports:
-      - 8081:8081
-      - 8443:8443
+      - 18082:8081
+      - 18443:8443
     environment:
       - PUID=1000
       - PGID=1000
