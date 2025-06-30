@@ -413,38 +413,38 @@ services:
 ######################################
 # huntarr
 #####################################
-  huntarr:
-    image: huntarr/huntarr:latest
-    container_name: huntarr
-    platform: linux/amd64
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
-    ports:
-      - 8080:8181
-    volumes:
-      - ${ARRPATH}huntarr/config:/config
-      - ${ARRPATH}huntarr/data:/data
-    restart: unless-stopped
-    networks:
-      - arrstack
-    labels:
-        - "homepage.group=Media2"
-        - "homepage.name=huntarr"
-        - "homepage.icon=huntarr.png"
-        - "homepage.href=http://192.168.68.116:8181"
-        - "traefik.enable=true"
-        - "traefik.http.routers.huntarr.entrypoints=http"
-        - "traefik.http.routers.huntarr.rule=Host(`huntarr.asbblog.com`)"
-        - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
-        - "traefik.http.routers.huntarr.middlewares=https-redirect"
-        - "traefik.http.routers.huntarr-secure.entrypoints=https"
-        - "traefik.http.routers.huntarr-secure.rule=Host(`huntarr.asbblog.com`)"
-        - "traefik.http.routers.huntarr-secure.tls=true"
-        - "traefik.http.routers.huntarr-secure.service=huntarr"
-        - "traefik.http.services.huntarr.loadbalancer.server.port=8181"
-        - "traefik.docker.network=arrstack"
+  # huntarr:
+  #   image: huntarr/huntarr:latest
+  #   container_name: huntarr
+  #   platform: linux/amd64
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - TZ=Etc/UTC
+  #   ports:
+  #     - 8080:8181
+  #   volumes:
+  #     - ${ARRPATH}huntarr/config:/config
+  #     - ${ARRPATH}huntarr/data:/data
+  #   restart: unless-stopped
+  #   networks:
+  #     - arrstack
+  #   labels:
+  #       - "homepage.group=Media2"
+  #       - "homepage.name=huntarr"
+  #       - "homepage.icon=huntarr.png"
+  #       - "homepage.href=http://192.168.68.116:8181"
+  #       - "traefik.enable=true"
+  #       - "traefik.http.routers.huntarr.entrypoints=http"
+  #       - "traefik.http.routers.huntarr.rule=Host(`huntarr.asbblog.com`)"
+  #       - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
+  #       - "traefik.http.routers.huntarr.middlewares=https-redirect"
+  #       - "traefik.http.routers.huntarr-secure.entrypoints=https"
+  #       - "traefik.http.routers.huntarr-secure.rule=Host(`huntarr.asbblog.com`)"
+  #       - "traefik.http.routers.huntarr-secure.tls=true"
+  #       - "traefik.http.routers.huntarr-secure.service=huntarr"
+  #       - "traefik.http.services.huntarr.loadbalancer.server.port=8181"
+  #       - "traefik.docker.network=arrstack"
 ########################
 # Caddy
 # ########################
