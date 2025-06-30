@@ -414,7 +414,7 @@ services:
 # huntarr
 #####################################
   huntarr:
-    image: ghcr.io/plexguide/huntarr:latest
+    image: huntarr/huntarr:latest
     container_name: huntarr
     platform: linux/amd64
     environment:
