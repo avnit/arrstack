@@ -364,39 +364,39 @@ services:
         - "traefik.docker.network=arrstack"
 ################
 # configarr
-##############
-  configarr:
-    image: ghcr.io/raydak-labs/configarr:latest
-    container_name: configarr
-    platform: linux/amd64
-    user: 1000:1000
-    environment:
-      - TZ=Etc/UTC
-    volumes:
-      - ${ARRPATH}configarr/config:/app/config
-      - ${ARRPATH}configarr/dockerrepos:/app/repos
-      - ${ARRPATH}configarr/custom/cfs:/app/cfs
-      - ${ARRPATH}configarr/custom/templates:/app/templates
-    restart: unless-stopped
-    networks:
-      - arrstack
-    labels:
-        - "homepage.group=Media2"
-        - "homepage.name=configarr"
-        - "homepage.icon=configarr.png"
-        - "homepage.href=http://jconfigarr.asbblog.com"
-        - "traefik.enable=true"
-        - "traefik.http.routers.configarr.entrypoints=http"
-        - "traefik.http.routers.configarr.rule=Host(`configarr.asbblog.com`)"
-        - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
-        - "traefik.http.routers.configarr.middlewares=https-redirect"
-        - "traefik.http.routers.configarr-secure.entrypoints=https"
-        - "traefik.http.routers.configarr-secure.rule=Host(`configarr.asbblog.com`)"
-        - "traefik.http.routers.configarr-secure.tls=true"
-        - "traefik.http.routers.configarr-secure.service=configarr"
-        - "traefik.http.services.configarr.loadbalancer.server.port=9090"
-        - "traefik.docker.network=arrstack"
-########################
+# ##############
+#   configarr:
+#     image: ghcr.io/raydak-labs/configarr:latest
+#     container_name: configarr
+#     platform: linux/amd64
+#     user: 1000:1000
+#     environment:
+#       - TZ=Etc/UTC
+#     volumes:
+#       - ${ARRPATH}configarr/config:/app/config
+#       - ${ARRPATH}configarr/dockerrepos:/app/repos
+#       - ${ARRPATH}configarr/custom/cfs:/app/cfs
+#       - ${ARRPATH}configarr/custom/templates:/app/templates
+#     restart: unless-stopped
+#     networks:
+#       - arrstack
+#     labels:
+#         - "homepage.group=Media2"
+#         - "homepage.name=configarr"
+#         - "homepage.icon=configarr.png"
+#         - "homepage.href=http://jconfigarr.asbblog.com"
+#         - "traefik.enable=true"
+#         - "traefik.http.routers.configarr.entrypoints=http"
+#         - "traefik.http.routers.configarr.rule=Host(`configarr.asbblog.com`)"
+#         - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
+#         - "traefik.http.routers.configarr.middlewares=https-redirect"
+#         - "traefik.http.routers.configarr-secure.entrypoints=https"
+#         - "traefik.http.routers.configarr-secure.rule=Host(`configarr.asbblog.com`)"
+#         - "traefik.http.routers.configarr-secure.tls=true"
+#         - "traefik.http.routers.configarr-secure.service=configarr"
+#         - "traefik.http.services.configarr.loadbalancer.server.port=9090"
+#         - "traefik.docker.network=arrstack"
+# ########################
 # Autoheal
 ########################
   autoheal:
