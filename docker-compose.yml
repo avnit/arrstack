@@ -241,7 +241,7 @@ services:
       - "traefik.http.services.homarr.loadbalancer.server.port=7575"
       - "traefik.docker.network=arrstack"
     env_file:
-  #     - '.env'
+       - '.env'
 
 #      ██╗███████╗██╗     ██╗  ██╗   ██╗███████╗██╗███╗   ██╗
 #      ██║██╔════╝██║     ██║  ╚██╗ ██╔╝██╔════╝██║████╗  ██║
