@@ -11,6 +11,7 @@ services:
     image: linuxserver/prowlarr:latest
     container_name: prowlarr
     hostname: prowlarr
+    platform: linux/amd64
     volumes:
       - ${ARRPATH}Prowlarr/config:/config
       - ${ARRPATH}Prowlarr/backup:/data/Backup
@@ -52,6 +53,7 @@ services:
     image: linuxserver/sonarr:latest
     container_name: sonarr
     hostname: sonarr
+    platform: linux/amd64
     networks:
       - arrstack
     volumes:
@@ -92,6 +94,7 @@ services:
     image: linuxserver/radarr:latest
     container_name: radarr
     hostname: radarr
+    platform: linux/amd64
     volumes:
       - ${ARRPATH}Radarr/config:/config
       - ${ARRPATH}Radarr/movies:/data/movies
@@ -132,6 +135,7 @@ services:
     image: linuxserver/lidarr:latest
     container_name: lidarr
     hostname: lidarr
+    platform: linux/amd64
     volumes:
       - ${ARRPATH}Lidarr/config:/config
       - ${ARRPATH}Lidarr/music:/data/musicfolder
@@ -168,10 +172,10 @@ services:
 # ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
 
   readarr:
-    # image: linuxserver/readarr:develop
     image: linuxserver/readarr:nightly
     container_name: readarr
     hostname: readarr
+    platform: linux/amd64
     volumes:
       - ${ARRPATH}Readarr/config:/config
       - ${ARRPATH}Readarr/books:/data/books
@@ -210,6 +214,7 @@ services:
   homarr:
     container_name: homarr
     image: ghcr.io/ajnart/homarr:latest
+    platform: linux/amd64
     restart: unless-stopped
     volumes:
       - ${ARRPATH}Homarr/configs:/app/data/configs
@@ -246,8 +251,9 @@ services:
 #  ╚════╝ ╚══════╝╚══════╝╚══════╝╚═╝   ╚═╝     ╚═╝╚═╝  ╚═══╝
 
   jellyfin:
-    image: linuxserver/jellyfin
+    image: linuxserver/jellyfin:latest
     container_name: jellyfin
+    platform: linux/amd64
     ports:
       - '8096:8096/tcp'   # Jellyfin web interface
       - '7359:7359/udp'   # Network discovery
@@ -262,7 +268,6 @@ services:
       - ${ARRPATH}Readarr/books:/data/Books
       - ${ARRPATH}Downloads/tv-whisparr:/data/temp-movies
       - ${ARRPATH}whisparr/data/amovies:/data/temp-movies2
-#      - nfs_volume:/data/movies-unraid
     labels:
       - "homepage.group=Media2"
       - "homepage.name=jellyfin"
@@ -270,11 +275,11 @@ services:
       - "homepage.href=http://192.168.68.110:8096"
       - "traefik.enable=true"
       - "traefik.http.routers.jellyfin.entrypoints=http"
-      - "traefik.http.routers.jellyfin.rule=Host(`jellyfin3.asbblog.com`)"                           # Replace $DOMAIN_NAME with yours
+      - "traefik.http.routers.jellyfin.rule=Host(`jellyfin3.asbblog.com`)"
       - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.jellyfin.middlewares=https-redirect"
       - "traefik.http.routers.jellyfin-secure.entrypoints=https"
-      - "traefik.http.routers.jellyfin-secure.rule=Host(`jellyfin3.asbblog.com`)"                    # Replace $DOMAIN_NAME with yours
+      - "traefik.http.routers.jellyfin-secure.rule=Host(`jellyfin3.asbblog.com`)"
       - "traefik.http.routers.jellyfin-secure.tls=true"
       - "traefik.http.routers.jellyfin-secure.service=jellyfin"
       - "traefik.http.services.jellyfin.loadbalancer.server.port=8096"
@@ -294,6 +299,7 @@ services:
     image: linuxserver/qbittorrent:latest
     container_name: qbittorrent
     hostname: qbittorrent
+    platform: linux/amd64
     restart: unless-stopped
     volumes:
       - ${ARRPATH}qbittorrent/config:/config
@@ -323,13 +329,6 @@ services:
     env_file:
       - '.env'
 
-# volumes:
-#  nfs_volume:
-#    driver: local
-#    driver_opts:
-#      type: nfs
-#      o: addr=192.168.68.84:/mnt/user/business-share-new/Movies-English,nolock,soft,nfsvers=4
-#      device: "${ARRPATH}Jellyfin/movies"
 ###########
 # Jellyseerr
 ##########
@@ -337,6 +336,7 @@ services:
   jellyseerr:
      image: fallenbagel/jellyseerr:latest
      container_name: jellyseerr
+     platform: linux/amd64
      environment:
        - LOG_LEVEL=debug
      ports:
@@ -350,14 +350,14 @@ services:
         - "homepage.group=Media2"
         - "homepage.name=jellyseerr"
         - "homepage.icon=jellyseerr.png"
-        - "homepage.href=http://jellyseerr.asbblog.com"                                           # Replace $DOMAIN_NAME with yours
+        - "homepage.href=http://jellyseerr.asbblog.com"
         - "traefik.enable=true"
         - "traefik.http.routers.jellyseerr.entrypoints=http"
-        - "traefik.http.routers.jellyseerr.rule=Host(`jellyseerr.asbblog.com`)"                      # Replace $DOMAIN_NAME with yours
+        - "traefik.http.routers.jellyseerr.rule=Host(`jellyseerr.asbblog.com`)"
         - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
         - "traefik.http.routers.jellyseerr.middlewares=https-redirect"
         - "traefik.http.routers.jellyseerr-secure.entrypoints=https"
-        - "traefik.http.routers.jellyseerr-secure.rule=Host(`jellyseerr.asbblog.com`)"               # Replace $DOMAIN_NAME with yours
+        - "traefik.http.routers.jellyseerr-secure.rule=Host(`jellyseerr.asbblog.com`)"
         - "traefik.http.routers.jellyseerr-secure.tls=true"
         - "traefik.http.routers.jellyseerr-secure.service=jellyseerr"
         - "traefik.http.services.jellyseerr.loadbalancer.server.port=5055"
@@ -368,29 +368,30 @@ services:
   configarr:
     image: ghcr.io/raydak-labs/configarr:latest
     container_name: configarr
-    user: 1000:1000 # Optional, defaults to root:root
+    platform: linux/amd64
+    user: 1000:1000
     environment:
       - TZ=Etc/UTC
     volumes:
-      - ${ARRPATH}configarr/config:/app/config # Contains the config.yml and secrets.yml
-      - ${ARRPATH}configarr/dockerrepos:/app/repos # Cache repositories
-      - ${ARRPATH}configarr/custom/cfs:/app/cfs # Optional if custom formats locally provided
-      - ${ARRPATH}configarr/custom/templates:/app/templates # Optional if custom templates
-    restart: unless-stopped # optional make sure this is set to no or removed. Default is no
+      - ${ARRPATH}configarr/config:/app/config
+      - ${ARRPATH}configarr/dockerrepos:/app/repos
+      - ${ARRPATH}configarr/custom/cfs:/app/cfs
+      - ${ARRPATH}configarr/custom/templates:/app/templates
+    restart: unless-stopped
     networks:
       - arrstack
     labels:
         - "homepage.group=Media2"
         - "homepage.name=configarr"
         - "homepage.icon=configarr.png"
-        - "homepage.href=http://jconfigarr.asbblog.com"                                           # Replace $DOMAIN_NAME with yours
+        - "homepage.href=http://jconfigarr.asbblog.com"
         - "traefik.enable=true"
         - "traefik.http.routers.configarr.entrypoints=http"
-        - "traefik.http.routers.configarr.rule=Host(`configarr.asbblog.com`)"                      # Replace $DOMAIN_NAME with yours
+        - "traefik.http.routers.configarr.rule=Host(`configarr.asbblog.com`)"
         - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
         - "traefik.http.routers.configarr.middlewares=https-redirect"
         - "traefik.http.routers.configarr-secure.entrypoints=https"
-        - "traefik.http.routers.configarr-secure.rule=Host(`configarr.asbblog.com`)"               # Replace $DOMAIN_NAME with yours
+        - "traefik.http.routers.configarr-secure.rule=Host(`configarr.asbblog.com`)"
         - "traefik.http.routers.configarr-secure.tls=true"
         - "traefik.http.routers.configarr-secure.service=configarr"
         - "traefik.http.services.configarr.loadbalancer.server.port=9090"
@@ -403,6 +404,7 @@ services:
       AUTOHEAL_CONTAINER_LABEL: autoheal
       AUTOHEAL_INTERVAL: 7
     image: willfarrell/autoheal:latest
+    platform: linux/amd64
     network_mode: none
     restart: always
     volumes:
@@ -414,6 +416,7 @@ services:
   huntarr:
     image: ghcr.io/plexguide/huntarr:latest
     container_name: huntarr
+    platform: linux/amd64
     environment:
       - PUID=1000
       - PGID=1000
@@ -430,14 +433,14 @@ services:
         - "homepage.group=Media2"
         - "homepage.name=huntarr"
         - "homepage.icon=huntarr.png"
-        - "homepage.href=http://192.168.68.110:8181"                       # Replace $DOMAIN_NAME with yours
+        - "homepage.href=http://192.168.68.110:8181"
         - "traefik.enable=true"
         - "traefik.http.routers.huntarr.entrypoints=http"
-        - "traefik.http.routers.huntarr.rule=Host(`huntarr.asbblog.com`)"                      # Replace $DOMAIN_NAME with yours
+        - "traefik.http.routers.huntarr.rule=Host(`huntarr.asbblog.com`)"
         - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
         - "traefik.http.routers.huntarr.middlewares=https-redirect"
         - "traefik.http.routers.huntarr-secure.entrypoints=https"
-        - "traefik.http.routers.huntarr-secure.rule=Host(`huntarr.asbblog.com`)"               # Replace $DOMAIN_NAME with yours
+        - "traefik.http.routers.huntarr-secure.rule=Host(`huntarr.asbblog.com`)"
         - "traefik.http.routers.huntarr-secure.tls=true"
         - "traefik.http.routers.huntarr-secure.service=configarr"
         - "traefik.http.services.huntarr.loadbalancer.server.port=8181"
@@ -447,7 +450,8 @@ services:
 ########################
   caddy:
     container_name: caddy
-    image: ghcr.io/hotio/caddy
+    image: ghcr.io/hotio/caddy:latest
+    platform: linux/amd64
     ports:
       - 8081:8081
       - 8443:8443
@@ -467,48 +471,37 @@ services:
   traefik:
     image: traefik:latest
     container_name: traefik
+    platform: linux/amd64
     restart: unless-stopped
     networks:
-      - arrstack                                            # Proxy Network
+      - arrstack
     ports:
       - 9080:80
       - 9443:443
     environment:
-      #- CF_DNS_API_TOKEN=      # CHange API_TOKEN
-      # If you choose to use an API Key instead of a Token, specify your email as well
       - CF_API_EMAIL=${CF_API_EMAIL}
       - CF_API_KEY=${CF_API_KEY}
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ${ARRPATH}traefik/data/traefik.yml:/traefik.yml:ro               # Change File Locations if needed
-      - ${ARRPATH}traefik/data/acme.json:/acme.json                      # Change File Locations if needed, also "chmod 600 acme.json"
-      - ${ARRPATH}treafik/data/config.yml:/config.yml:ro                 # Change File Locations if needed
+      - ${ARRPATH}traefik/data/traefik.yml:/traefik.yml:ro
+      - ${ARRPATH}traefik/data/acme.json:/acme.json
+      - ${ARRPATH}treafik/data/config.yml:/config.yml:ro
     labels:
       - "traefik.enable=true"
-
-      # HTTP Router for Traefik Dashboard (redirects to HTTPS)
-      - "traefik.http.routers.traefik-http.entrypoints=web" # Assuming 'web' is your HTTP entrypoint defined in traefik.yml on port 80
-      - "traefik.http.routers.traefik-http.rule=Host(`https://www.google.com/url?sa=E&source=gmail&q=traefik.asbblog.com`)" # Specific hostname is better for the dashboard
+      - "traefik.http.routers.traefik-http.entrypoints=web"
+      - "traefik.http.routers.traefik-http.rule=Host(`traefik.asbblog.com`)"
       - "traefik.http.routers.traefik-http.middlewares=traefik-redirect-to-https"
-
-      # HTTPS Router for Traefik Dashboard
-      - "traefik.http.routers.traefik-secure.entrypoints=websecure" # Assuming 'websecure' is your HTTPS entrypoint defined in traefik.yml on port 443
-      - "traefik.http.routers.traefik-secure.rule=Host(`https://www.google.com/url?sa=E&source=gmail&q=traefik.asbblog.com`)" # Specific hostname
+      - "traefik.http.routers.traefik-secure.entrypoints=websecure"
+      - "traefik.http.routers.traefik-secure.rule=Host(`traefik.asbblog.com`)"
       - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
       - "traefik.http.routers.traefik-secure.tls=true"
-      - "traefik.http.routers.traefik-secure.tls.certresolver=cloudflare" # Ensure 'cloudflare' resolver is defined in traefik.yml
-      # Wildcard certificate for the domain - this will cover https://www.google.com/url?sa=E&source=gmail&q=traefik.asbblog.com and other *.https://www.google.com/url?sa=E&source=gmail&q=traefik.asbblog.com services
-      - "traefik.http.routers.traefik-secure.tls.domains[0].main=asbblog.com" # Your main domain
-      - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.asbblog.com" # SAN for wildcards
-      - "traefik.http.routers.traefik-secure.service=api@internal" # Exposes the Traefik API/Dashboard
-
-      # Middlewares
+      - "traefik.http.routers.traefik-secure.tls.certresolver=cloudflare"
+      - "traefik.http.routers.traefik-secure.tls.domains[0].main=asbblog.com"
+      - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.asbblog.com"
+      - "traefik.http.routers.traefik-secure.service=api@internal"
       - "traefik.http.middlewares.traefik-redirect-to-https.redirectscheme.scheme=https"
-      - "traefik.http.middlewares.traefik-auth.basicauth.users=admin:golD123@" # Replace with htpasswd generated hash (e.g., admin:$$apr1$$...)
-      # The 'sslheader' middleware below is defined but not used by the dashboard itself.
-      # You might use it for other services if they need the X-Forwarded-Proto header.
-      # - "traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto=https"
+      - "traefik.http.middlewares.traefik-auth.basicauth.users=admin:golD123@"
 networks:
   arrstack:
     external: true
