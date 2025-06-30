@@ -502,7 +502,7 @@ services:
 #       - "traefik.http.routers.traefik-secure.service=api@internal"
 #       - "traefik.http.middlewares.traefik-redirect-to-https.redirectscheme.scheme=https"
 #       - "traefik.http.middlewares.traefik-auth.basicauth.users=admin:golD123@"
-# networks:
-#   arrstack:
-#     external: true
-#     name: arrstack
+networks:
+  arrstack:
+    external: true
+    name: arrstack
