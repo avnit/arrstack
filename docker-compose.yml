@@ -49,199 +49,199 @@ services:
 # ███████║╚██████╔╝██║ ╚████║██║  ██║██║  ██║██║  ██║
 # ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
 
-#   sonarr:
-#     image: linuxserver/sonarr:latest
-#     container_name: sonarr
-#     hostname: sonarr
-#     platform: linux/amd64
-#     networks:
-#       - arrstack
-#     volumes:
-#       - ${ARRPATH}Sonarr/config:/config
-#       - ${ARRPATH}Sonarr/backup:/data/Backup
-#       - ${ARRPATH}Sonarr/tvshows:/data/tvshows
-#       - ${ARRPATH}Downloads:/downloads
-#     ports:
-#       - 8989:8989
-#     restart: unless-stopped
-#     labels:
-#       - "homepage.group=Media2"
-#       - "homepage.name=sonarr3"
-#       - "homepage.icon=sonarr.png"
-#       - "homepage.href=http://192.168.68.116:8989"
-#       - "traefik.enable=true"
-#       - "traefik.http.routers.sonarr.entrypoints=http"
-#       - "traefik.http.routers.sonarr.rule=Host(`sonarr3.asbblog.com`)"
-#       - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
-#       - "traefik.http.routers.sonarr.middlewares=https-redirect"
-#       - "traefik.http.routers.sonarr-secure.entrypoints=https"
-#       - "traefik.http.routers.sonarr-secure.rule=Host(`sonarr3.asbblog.com`)"
-#       - "traefik.http.routers.sonarr-secure.tls=true"
-#       - "traefik.http.routers.sonarr-secure.service=sonarr"
-#       - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
-#       - "traefik.docker.network=arrstack"
-#     env_file:
-#       - '.env'
+  sonarr:
+    image: linuxserver/sonarr:latest
+    container_name: sonarr
+    hostname: sonarr
+    platform: linux/amd64
+    networks:
+      - arrstack
+    volumes:
+      - ${ARRPATH}Sonarr/config:/config
+      - ${ARRPATH}Sonarr/backup:/data/Backup
+      - ${ARRPATH}Sonarr/tvshows:/data/tvshows
+      - ${ARRPATH}Downloads:/downloads
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+    labels:
+      - "homepage.group=Media2"
+      - "homepage.name=sonarr3"
+      - "homepage.icon=sonarr.png"
+      - "homepage.href=http://192.168.68.116:8989"
+      - "traefik.enable=true"
+      - "traefik.http.routers.sonarr.entrypoints=http"
+      - "traefik.http.routers.sonarr.rule=Host(`sonarr3.asbblog.com`)"
+      - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.sonarr.middlewares=https-redirect"
+      - "traefik.http.routers.sonarr-secure.entrypoints=https"
+      - "traefik.http.routers.sonarr-secure.rule=Host(`sonarr3.asbblog.com`)"
+      - "traefik.http.routers.sonarr-secure.tls=true"
+      - "traefik.http.routers.sonarr-secure.service=sonarr"
+      - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
+      - "traefik.docker.network=arrstack"
+    env_file:
+      - '.env'
 
-# # ██████╗  █████╗ ██████╗  █████╗ ██████╗ ██████╗
-# # ██╔══██╗██╔══██╗██╔══██╗██╔══██╗██╔══██╗██╔══██╗
-# # ██████╔╝███████║██║  ██║███████║██████╔╝██████╔╝
-# # ██╔══██╗██╔══██║██║  ██║██╔══██║██╔══██╗██╔══██╗
-# # ██║  ██║██║  ██║██████╔╝██║  ██║██║  ██║██║  ██║
-# # ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
+# ██████╗  █████╗ ██████╗  █████╗ ██████╗ ██████╗
+# ██╔══██╗██╔══██╗██╔══██╗██╔══██╗██╔══██╗██╔══██╗
+# ██████╔╝███████║██║  ██║███████║██████╔╝██████╔╝
+# ██╔══██╗██╔══██║██║  ██║██╔══██║██╔══██╗██╔══██╗
+# ██║  ██║██║  ██║██████╔╝██║  ██║██║  ██║██║  ██║
+# ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
 
-#   radarr:
-#     image: linuxserver/radarr:latest
-#     container_name: radarr
-#     hostname: radarr
-#     platform: linux/amd64
-#     volumes:
-#       - ${ARRPATH}Radarr/config:/config
-#       - ${ARRPATH}Radarr/movies:/data/movies
-#       - ${ARRPATH}Radarr/backup:/data/Backup
-#       - ${ARRPATH}Downloads:/downloads
-#     ports:
-#       - 7878:7878
-#     restart: unless-stopped
-#     networks:
-#       - arrstack
-#     labels:
-#           - "homepage.group=Media2"
-#           - "homepage.name=Radarr"
-#           - "homepage.icon=radarr.png"
-#           - "homepage.href=http://192.168.68.116:7878"
-#           - "traefik.enable=true"
-#           - "traefik.http.routers.radaar.entrypoints=http"
-#           - "traefik.http.routers.radaar.rule=Host(`radarr3.asbblog.com`)"
-#           - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
-#           - "traefik.http.routers.radaar.middlewares=https-redirect"
-#           - "traefik.http.routers.radaar-secure.entrypoints=https"
-#           - "traefik.http.routers.radaar-secure.rule=Host(`radarr3.asbblog.com`)"
-#           - "traefik.http.routers.radaar-secure.tls=true"
-#           - "traefik.http.routers.radaar-secure.service=radaar"
-#           - "traefik.http.services.radaar.loadbalancer.server.port=7878"
-#           - "traefik.docker.network=arrstack"
-#     env_file:
-#       - '.env'
+  radarr:
+    image: linuxserver/radarr:latest
+    container_name: radarr
+    hostname: radarr
+    platform: linux/amd64
+    volumes:
+      - ${ARRPATH}Radarr/config:/config
+      - ${ARRPATH}Radarr/movies:/data/movies
+      - ${ARRPATH}Radarr/backup:/data/Backup
+      - ${ARRPATH}Downloads:/downloads
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+    networks:
+      - arrstack
+    labels:
+          - "homepage.group=Media2"
+          - "homepage.name=Radarr"
+          - "homepage.icon=radarr.png"
+          - "homepage.href=http://192.168.68.116:7878"
+          - "traefik.enable=true"
+          - "traefik.http.routers.radaar.entrypoints=http"
+          - "traefik.http.routers.radaar.rule=Host(`radarr3.asbblog.com`)"
+          - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
+          - "traefik.http.routers.radaar.middlewares=https-redirect"
+          - "traefik.http.routers.radaar-secure.entrypoints=https"
+          - "traefik.http.routers.radaar-secure.rule=Host(`radarr3.asbblog.com`)"
+          - "traefik.http.routers.radaar-secure.tls=true"
+          - "traefik.http.routers.radaar-secure.service=radaar"
+          - "traefik.http.services.radaar.loadbalancer.server.port=7878"
+          - "traefik.docker.network=arrstack"
+    env_file:
+      - '.env'
 
-# # ██╗     ██╗██████╗  █████╗ ██████╗ ██████╗
-# # ██║     ██║██╔══██╗██╔══██╗██╔══██╗██╔══██╗
-# # ██║     ██║██║  ██║███████║██████╔╝██████╔╝
-# # ██║     ██║██║  ██║██╔══██║██╔══██╗██╔══██╗
-# # ███████╗██║██████╔╝██║  ██║██║  ██║██║  ██║
-# # ╚══════╝╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
+# ██╗     ██╗██████╗  █████╗ ██████╗ ██████╗
+# ██║     ██║██╔══██╗██╔══██╗██╔══██╗██╔══██╗
+# ██║     ██║██║  ██║███████║██████╔╝██████╔╝
+# ██║     ██║██║  ██║██╔══██║██╔══██╗██╔══██╗
+# ███████╗██║██████╔╝██║  ██║██║  ██║██║  ██║
+# ╚══════╝╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
 
-#   lidarr:
-#     image: linuxserver/lidarr:latest
-#     container_name: lidarr
-#     hostname: lidarr
-#     platform: linux/amd64
-#     volumes:
-#       - ${ARRPATH}Lidarr/config:/config
-#       - ${ARRPATH}Lidarr/music:/data/musicfolder
-#       - ${ARRPATH}Downloads:/downloads
-#     networks:
-#       - arrstack
-#     ports:
-#       - 8686:8686
-#     labels:
-#       - "homepage.group=Media2"
-#       - "homepage.name=lidarr"
-#       - "homepage.icon=lidarr.png"
-#       - "homepage.href=http://192.168.68.116:8686"
-#       - "traefik.enable=true"
-#       - "traefik.http.routers.lidarr.entrypoints=http"
-#       - "traefik.http.routers.lidarr.rule=Host(`lidarr3.asbblog.com`)"
-#       - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
-#       - "traefik.http.routers.lidarr.middlewares=https-redirect"
-#       - "traefik.http.routers.lidarr-secure.entrypoints=https"
-#       - "traefik.http.routers.lidarr-secure.rule=Host(`lidarr3.asbblog.com`)"
-#       - "traefik.http.routers.lidarr-secure.tls=true"
-#       - "traefik.http.routers.lidarr-secure.service=lidarr"
-#       - "traefik.http.services.lidarr.loadbalancer.server.port=8686"
-#       - "traefik.docker.network=arrstack"
-#     restart: unless-stopped
-#     env_file:
-#       - '.env'
+  lidarr:
+    image: linuxserver/lidarr:latest
+    container_name: lidarr
+    hostname: lidarr
+    platform: linux/amd64
+    volumes:
+      - ${ARRPATH}Lidarr/config:/config
+      - ${ARRPATH}Lidarr/music:/data/musicfolder
+      - ${ARRPATH}Downloads:/downloads
+    networks:
+      - arrstack
+    ports:
+      - 8686:8686
+    labels:
+      - "homepage.group=Media2"
+      - "homepage.name=lidarr"
+      - "homepage.icon=lidarr.png"
+      - "homepage.href=http://192.168.68.116:8686"
+      - "traefik.enable=true"
+      - "traefik.http.routers.lidarr.entrypoints=http"
+      - "traefik.http.routers.lidarr.rule=Host(`lidarr3.asbblog.com`)"
+      - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.lidarr.middlewares=https-redirect"
+      - "traefik.http.routers.lidarr-secure.entrypoints=https"
+      - "traefik.http.routers.lidarr-secure.rule=Host(`lidarr3.asbblog.com`)"
+      - "traefik.http.routers.lidarr-secure.tls=true"
+      - "traefik.http.routers.lidarr-secure.service=lidarr"
+      - "traefik.http.services.lidarr.loadbalancer.server.port=8686"
+      - "traefik.docker.network=arrstack"
+    restart: unless-stopped
+    env_file:
+      - '.env'
 
-# # ██████╗ ███████╗ █████╗ ██████╗  █████╗ ██████╗ ██████╗
-# # ██╔══██╗██╔════╝██╔══██╗██╔══██╗██╔══██╗██╔══██╗██╔══██╗
-# # ██████╔╝█████╗  ███████║██║  ██║███████║██████╔╝██████╔╝
-# # ██╔══██╗██╔══╝  ██╔══██║██║  ██║██╔══██║██╔══██╗██╔══██╗
-# # ██║  ██║███████╗██║  ██║██████╔╝██║  ██║██║  ██║██║  ██║
-# # ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
+# ██████╗ ███████╗ █████╗ ██████╗  █████╗ ██████╗ ██████╗
+# ██╔══██╗██╔════╝██╔══██╗██╔══██╗██╔══██╗██╔══██╗██╔══██╗
+# ██████╔╝█████╗  ███████║██║  ██║███████║██████╔╝██████╔╝
+# ██╔══██╗██╔══╝  ██╔══██║██║  ██║██╔══██║██╔══██╗██╔══██╗
+# ██║  ██║███████╗██║  ██║██████╔╝██║  ██║██║  ██║██║  ██║
+# ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
 
-#   readarr:
-#     image: linuxserver/readarr:nightly
-#     container_name: readarr
-#     hostname: readarr
-#     platform: linux/amd64
-#     volumes:
-#       - ${ARRPATH}Readarr/config:/config
-#       - ${ARRPATH}Readarr/books:/data/books
-#       - ${ARRPATH}Downloads:/downloads
-#     networks:
-#       - arrstack
-#     labels:
-#       - "homepage.group=Media2"
-#       - "homepage.name=readarr"
-#       - "homepage.icon=readarr.png"
-#       - "homepage.href=http://192.168.68.116:8787"
-#       - "traefik.enable=true"
-#       - "traefik.http.routers.readarr.entrypoints=http"
-#       - "traefik.http.routers.readarr.rule=Host(`readarr3.asbblog.com`)"
-#       - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
-#       - "traefik.http.routers.readarr.middlewares=https-redirect"
-#       - "traefik.http.routers.readarr-secure.entrypoints=https"
-#       - "traefik.http.routers.readarr-secure.rule=Host(`readarr3.asbblog.com`)"
-#       - "traefik.http.routers.readarr-secure.tls=true"
-#       - "traefik.http.routers.readarr-secure.service=readarr"
-#       - "traefik.http.services.readarr.loadbalancer.server.port=8787"
-#       - "traefik.docker.network=arrstack"
-#     ports:
-#       - 8787:8787
-#     restart: unless-stopped
-#     env_file:
-#       - '.env'
+  readarr:
+    image: linuxserver/readarr:nightly
+    container_name: readarr
+    hostname: readarr
+    platform: linux/amd64
+    volumes:
+      - ${ARRPATH}Readarr/config:/config
+      - ${ARRPATH}Readarr/books:/data/books
+      - ${ARRPATH}Downloads:/downloads
+    networks:
+      - arrstack
+    labels:
+      - "homepage.group=Media2"
+      - "homepage.name=readarr"
+      - "homepage.icon=readarr.png"
+      - "homepage.href=http://192.168.68.116:8787"
+      - "traefik.enable=true"
+      - "traefik.http.routers.readarr.entrypoints=http"
+      - "traefik.http.routers.readarr.rule=Host(`readarr3.asbblog.com`)"
+      - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.readarr.middlewares=https-redirect"
+      - "traefik.http.routers.readarr-secure.entrypoints=https"
+      - "traefik.http.routers.readarr-secure.rule=Host(`readarr3.asbblog.com`)"
+      - "traefik.http.routers.readarr-secure.tls=true"
+      - "traefik.http.routers.readarr-secure.service=readarr"
+      - "traefik.http.services.readarr.loadbalancer.server.port=8787"
+      - "traefik.docker.network=arrstack"
+    ports:
+      - 8787:8787
+    restart: unless-stopped
+    env_file:
+      - '.env'
 
-# # ██╗  ██╗ ██████╗ ███╗   ███╗ █████╗ ██████╗ ██████╗
-# # ██║  ██║██╔═══██╗████╗ ████║██╔══██╗██╔══██╗██╔══██╗
-# # ███████║██║   ██║██╔████╔██║███████║██████╔╝██████╔╝
-# # ██╔══██║██║   ██║██║╚██╔╝██║██╔══██║██╔══██╗██╔══██╗
-# # ██║  ██║╚██████╔╝██║ ╚═╝ ██║██║  ██║██║  ██║██║  ██║
-# # ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
+# ██╗  ██╗ ██████╗ ███╗   ███╗ █████╗ ██████╗ ██████╗
+# ██║  ██║██╔═══██╗████╗ ████║██╔══██╗██╔══██╗██╔══██╗
+# ███████║██║   ██║██╔████╔██║███████║██████╔╝██████╔╝
+# ██╔══██║██║   ██║██║╚██╔╝██║██╔══██║██╔══██╗██╔══██╗
+# ██║  ██║╚██████╔╝██║ ╚═╝ ██║██║  ██║██║  ██║██║  ██║
+# ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
 
-#   # homarr:
-#   #   container_name: homarr
-#   #   image: ghcr.io/ajnart/homarr:latest
-#   #   platform: linux/amd64
-#   #   restart: unless-stopped
-#   #   volumes:
-#   #     - ${ARRPATH}Homarr/configs:/app/data/configs
-#   #     - ${ARRPATH}Homarr/icons:/app/public/icons
-#   #     - ${ARRPATH}Homarr/data:/data
-#   #   networks:
-#   #     - arrstack
-#   #   ports:
-#   #     - '7575:7575'
-#   #   labels:
-#   #     - "homepage.group=Media2"
-#   #     - "homepage.name=homarr"
-#   #     - "homepage.icon=homarr.png"
-#   #     - "homepage.href=http://192.168.68.116:7575"
-#   #     - "traefik.enable=true"
-#   #     - "traefik.http.routers.homarr.entrypoints=http"
-#   #     - "traefik.http.routers.homarr.rule=Host(`homarr3.asbblog.com`)"
-#   #     - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
-#   #     - "traefik.http.routers.homarr.middlewares=https-redirect"
-#   #     - "traefik.http.routers.homarr-secure.entrypoints=https"
-#   #     - "traefik.http.routers.homarr-secure.rule=Host(`homarr3.asbblog.com`)"
-#   #     - "traefik.http.routers.homarr-secure.tls=true"
-#   #     - "traefik.http.routers.homarr-secure.service=homarr"
-#   #     - "traefik.http.services.homarr.loadbalancer.server.port=7575"
-#   #     - "traefik.docker.network=arrstack"
-#   #   env_file:
-#   #     - '.env'
+  # homarr:
+  #   container_name: homarr
+  #   image: ghcr.io/ajnart/homarr:latest
+  #   platform: linux/amd64
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ${ARRPATH}Homarr/configs:/app/data/configs
+  #     - ${ARRPATH}Homarr/icons:/app/public/icons
+  #     - ${ARRPATH}Homarr/data:/data
+  #   networks:
+  #     - arrstack
+  #   ports:
+  #     - '7575:7575'
+  #   labels:
+  #     - "homepage.group=Media2"
+  #     - "homepage.name=homarr"
+  #     - "homepage.icon=homarr.png"
+  #     - "homepage.href=http://192.168.68.116:7575"
+  #     - "traefik.enable=true"
+  #     - "traefik.http.routers.homarr.entrypoints=http"
+  #     - "traefik.http.routers.homarr.rule=Host(`homarr3.asbblog.com`)"
+  #     - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
+  #     - "traefik.http.routers.homarr.middlewares=https-redirect"
+  #     - "traefik.http.routers.homarr-secure.entrypoints=https"
+  #     - "traefik.http.routers.homarr-secure.rule=Host(`homarr3.asbblog.com`)"
+  #     - "traefik.http.routers.homarr-secure.tls=true"
+  #     - "traefik.http.routers.homarr-secure.service=homarr"
+  #     - "traefik.http.services.homarr.loadbalancer.server.port=7575"
+  #     - "traefik.docker.network=arrstack"
+  #   env_file:
+  #     - '.env'
 
 # #      ██╗███████╗██╗     ██╗  ██╗   ██╗███████╗██╗███╗   ██╗
 # #      ██║██╔════╝██║     ██║  ╚██╗ ██╔╝██╔════╝██║████╗  ██║
