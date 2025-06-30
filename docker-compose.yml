@@ -447,24 +447,24 @@ services:
         - "traefik.docker.network=arrstack"
 ########################
 # Caddy
-########################
-  caddy:
-    container_name: caddy
-    image: ghcr.io/hotio/caddy:latest
-    platform: linux/amd64
-    ports:
-      - 8081:8081
-      - 8443:8443
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - UMASK=002
-      - CUSTOM_BUILD
-      - TZ=Etc/UTC
-    volumes:
-      - ${ARRPATH}caddy/config:/config
-    networks:
-      - arrstack
+# ########################
+#   caddy:
+#     container_name: caddy
+#     image: ghcr.io/hotio/caddy:latest
+#     platform: linux/amd64
+#     ports:
+#       - 8081:8081
+#       - 8443:8443
+#     environment:
+#       - PUID=1000
+#       - PGID=1000
+#       - UMASK=002
+#       - CUSTOM_BUILD
+#       - TZ=Etc/UTC
+#     volumes:
+#       - ${ARRPATH}caddy/config:/config
+#     networks:
+#       - arrstack
 #######################################
 # Treafik
 #######################################
