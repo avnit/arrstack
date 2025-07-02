@@ -171,38 +171,38 @@ services:
 # ██║  ██║███████╗██║  ██║██████╔╝██║  ██║██║  ██║██║  ██║
 # ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
 
-  # readarr:
-  #   image: linuxserver/readarr:amd64-nightly
-  #   container_name: readarr
-  #   hostname: readarr
-  #   platform: linux/amd64
-  #   volumes:
-  #     - ${ARRPATH}Readarr/config:/config
-  #     - ${ARRPATH}Readarr/books:/data/books
-  #     - ${ARRPATH}Downloads:/downloads
-  #   networks:
-  #     - arrstack
-  #   labels:
-  #     - "homepage.group=Media2"
-  #     - "homepage.name=readarr"
-  #     - "homepage.icon=readarr.png"
-  #     - "homepage.href=http://192.168.68.116:8787"
-  #     - "traefik.enable=true"
-  #     - "traefik.http.routers.readarr.entrypoints=http"
-  #     - "traefik.http.routers.readarr.rule=Host(`readarr3.asbblog.com`)"
-  #     - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
-  #     - "traefik.http.routers.readarr.middlewares=https-redirect"
-  #     - "traefik.http.routers.readarr-secure.entrypoints=https"
-  #     - "traefik.http.routers.readarr-secure.rule=Host(`readarr3.asbblog.com`)"
-  #     - "traefik.http.routers.readarr-secure.tls=true"
-  #     - "traefik.http.routers.readarr-secure.service=readarr"
-  #     - "traefik.http.services.readarr.loadbalancer.server.port=8787"
-  #     - "traefik.docker.network=arrstack"
-  #   ports:
-  #     - 8787:8787
-  #   restart: unless-stopped
-  #   env_file:
-  #     - '.env'
+  readarr:
+    image: linuxserver/readarr:nightly-0.4.19.2811-ls400
+    container_name: readarr
+    hostname: readarr
+    platform: linux/amd64
+    volumes:
+      - ${ARRPATH}Readarr/config:/config
+      - ${ARRPATH}Readarr/books:/data/books
+      - ${ARRPATH}Downloads:/downloads
+    networks:
+      - arrstack
+    labels:
+      - "homepage.group=Media2"
+      - "homepage.name=readarr"
+      - "homepage.icon=readarr.png"
+      - "homepage.href=http://192.168.68.116:8787"
+      - "traefik.enable=true"
+      - "traefik.http.routers.readarr.entrypoints=http"
+      - "traefik.http.routers.readarr.rule=Host(`readarr3.asbblog.com`)"
+      - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.readarr.middlewares=https-redirect"
+      - "traefik.http.routers.readarr-secure.entrypoints=https"
+      - "traefik.http.routers.readarr-secure.rule=Host(`readarr3.asbblog.com`)"
+      - "traefik.http.routers.readarr-secure.tls=true"
+      - "traefik.http.routers.readarr-secure.service=readarr"
+      - "traefik.http.services.readarr.loadbalancer.server.port=8787"
+      - "traefik.docker.network=arrstack"
+    ports:
+      - 8787:8787
+    restart: unless-stopped
+    env_file:
+      - '.env'
 
 # ██╗  ██╗ ██████╗ ███╗   ███╗ █████╗ ██████╗ ██████╗
 # ██║  ██║██╔═══██╗████╗ ████║██╔══██╗██╔══██╗██╔══██╗
