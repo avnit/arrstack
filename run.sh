@@ -16,6 +16,12 @@ curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
 echo "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
 apt update && apt install -y docker-ce docker-ce-cli containerd.io
 sudo systemctl enable docker
-# It creates a Docker network and starts the Docker containers defined in the docker-compose.yml file.
+# It creates a Docker network and starts the Docker containers defined in the docker-compose.yml file.n
+# create a env file 
+echo "Creating .env file..."
+echo "ARRPATH=/media" > .env
+echo "CF_API_EMAIL=abambah@gmai.com" >> .env
+echo "CF_API_KEY=1234567890" >> .env
+echo "ARRSTACK_VERSION=latest" >> .env
 sudo docker network create arrstack
 docker compose up -d
