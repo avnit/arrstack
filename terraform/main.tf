@@ -17,9 +17,10 @@ provider "proxmox" {
 # --- Debian VM Resources ---
 
 resource "null_resource" "debian_template_installer" {
-  # This provisioner connects to the Proxmox Host
+  description = "This resource downloads and executes a script to create a Debian 12 cloud-init template on the Proxmox host."
+
   provisioner "remote-exec" {
-    
+    # This provisioner connects to the Proxmox Host
     inline = [
       # Downloads and executes the helper script to create the Debian 12 template
       "bash -c \"$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/vm/debian-vm.sh)\""
@@ -28,8 +29,8 @@ resource "null_resource" "debian_template_installer" {
     connection {
       type        = "ssh"
       user        = "root"
-      host        = "192.168.74.1"
-      private_key = file(pathexpand("~/.ssh/id_ed25519"))
+      host        = var.proxmox_host
+      private_key = file(pathexpand(var.ssh_private_key_path))
     }
   }
 
@@ -91,7 +92,7 @@ EOF
     connection {
       type        = "ssh"
       user        = "root"
-      private_key = file(pathexpand("~/.ssh/id_ed25519"))
+      private_key = file(pathexpand(var.ssh_private_key_path))
       host        = self.default_ipv4_address
     }
   }
@@ -102,6 +103,8 @@ EOF
 # FIX: Replaced the proxmox_vm_qemu resource for Home Assistant with a null_resource.
 # The helper script creates the VM directly, so Terraform only needs to trigger it.
 resource "null_resource" "home_assistant_vm_installer" {
+  description = "This resource downloads and executes a script to create a Home Assistant OS VM on the Proxmox host."
+
   # This provisioner connects to the Proxmox Host
   provisioner "remote-exec" {
     inline = [
@@ -113,16 +116,12 @@ resource "null_resource" "home_assistant_vm_installer" {
     connection {
       type        = "ssh"
       user        = "root"
-      host        = "192.168.74.1"
-      private_key = file(pathexpand("~/.ssh/id_ed25519"))
+      host        = var.proxmox_host
+      private_key = file(pathexpand(var.ssh_private_key_path))
     }
   }
 
   triggers = {
     script_url = "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/vm/haos-vm.sh"
   }
-}
-resource "proxmox_vm_qemu" "preprovision-test" {
-  preprovision = true
-  os_type      = "ubuntu"
 }

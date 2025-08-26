@@ -1,24 +1,26 @@
 variable "proxmox_url" {
-  description = "The URL of the Proxmox API"
+  description = "The URL of the Proxmox API."
   type        = string
-  default     = "https://192.168.74.1:8006/api2/json"
-  
-}
-
-variable "proxmox_user" {
-  description = "The username for the Proxmox API"
-  type        = string
-  default     = "terraform_user@pam"
 }
 
 variable "token_id" {
-  description = "The token ID for the Proxmox API"
+  description = "The Proxmox API token ID."
   type        = string
-  default     = "terraform_user@pam!terraform"
 }
 
 variable "vm_password" {
-  description = "The password for the Debian VM"
+  description = "The password for the VM."
   type        = string
-  default = "f8061b71-c957-45c3-927e-0485bd477c47"
+  sensitive   = true
+}
+
+variable "ssh_private_key_path" {
+  description = "The path to the SSH private key."
+  type        = string
+  default     = "~/.ssh/id_ed25519"
+}
+
+variable "proxmox_host" {
+  description = "The IP address of the Proxmox host."
+  type        = string
 }
