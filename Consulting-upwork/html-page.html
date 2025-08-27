@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upwork Job Search</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        .job-listing {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .job-title {
+            font-weight: bold;
+        }
+        .apply-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upwork Job Search</h1>
+    <p>Search for jobs related to "Google Cloud Platform"</p>
+    <button id="search-button">Search</button>
+    <div id="job-listings"></div>
+
+    <script>
+        document.getElementById("search-button").addEventListener("click", function() {
+            fetch("/jobs")
+                .then(response => response.json())
+                .then(data => {
+                    const jobListings = document.getElementById("job-listings");
+                    jobListings.innerHTML = "";
+
+                    for (const job of data) {
+                        const jobListing = document.createElement("div");
+                        jobListing.classList.add("job-listing");
+
+                        const jobTitle = document.createElement("div");
+                        jobTitle.classList.add("job-title");
+                        jobTitle.textContent = job.title;
+                        jobListing.appendChild(jobTitle);
+
+                        const jobSnippet = document.createElement("div");
+                        jobSnippet.textContent = job.snippet;
+                        jobListing.appendChild(jobSnippet);
+
+                        const applyButton = document.createElement("button");
+                        applyButton.classList.add("apply-button");
+                        applyButton.textContent = "Apply Now";
+                        applyButton.addEventListener("click", function() {
+                            window.open(job.url, "_blank");
+                        });
+                        jobListing.appendChild(applyButton);
+
+                        jobListings.appendChild(jobListing);
+                    }
+                });
+        });
+    </script>
+</body>
+</html>
