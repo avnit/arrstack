@@ -26,3 +26,26 @@ This folder contains Terraform configuration to automate the deployment of virtu
 This folder contains workspace-specific settings for the Visual Studio Code editor.
 
 *   `settings.json`: Contains JSON with settings for this project.
+
+<!-- ARCH-DIAGRAM:START -->
+
+## Architecture
+
+> Auto-generated architecture diagram. See [`docs/context-map.md`](docs/context-map.md) for the full context map (core application, containers/cloud, and database connections).
+
+```mermaid
+flowchart TD
+  User([User / Client])
+  App["arrstack<br/><small>app.py</small><br/>Application"]
+  SVC0["Azure"]
+  SVC1["Cloudflare Workers"]
+  Img["Container image<br/>(Docker/Compose)"]
+  TF["Terraform<br/>(infra)"]
+  User --> App
+  App --> SVC0
+  App --> SVC1
+  App -.deploy.-> Img
+  Img -.deploy.-> TF
+```
+
+<!-- ARCH-DIAGRAM:END -->
